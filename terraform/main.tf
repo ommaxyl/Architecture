@@ -31,7 +31,6 @@ resource "aws_ecs_task_definition" "fp-ecs-task" {
   cpu = 512
   memory = 2048
   execution_role_arn = "${data.aws_iam_role.ecs_task_execution_role.arn}"
-      # "image": "${var.awsaccount}.dkr.ecr.${var.awsregion}.amazonaws.com/${var.dockerimage}:latest"
   container_definitions = <<DEFINITION
 [
    {
