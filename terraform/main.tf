@@ -3,13 +3,6 @@ provider "aws" {
   region = "eu-west-2"
 }
 
-/*
-
-terraform/main.tf contains only resources strictly
-related to deploying the application in ECS
-
-*/
-
 # create the ECS cluster
 resource "aws_ecs_cluster" "fp-ecs-cluster" {
   name = "flask-app"
@@ -19,6 +12,7 @@ resource "aws_ecs_cluster" "fp-ecs-cluster" {
   }
 }
 
+# to allow the pull from ECR
 data "aws_iam_role" "ecs_task_execution_role" {
   name = "ecsTaskExecutionRole"
 }

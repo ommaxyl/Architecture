@@ -1,18 +1,4 @@
-/********
 
-terraform/network.tf contains all the necessary resources to
-setup the basis for our ECS application and AWS environment
-
-Resources:
-- Virtual Private Cloud
-- Internet Gateway
-- Route Table
-- Public & Private Subnets
-- Security Groups
-
-*********/
-
-# availability zones in the region (for me: us-east-2)
 data "aws_availability_zones" "azs" {}
 
 # create a VPC (Virtual Private Cloud)
@@ -22,7 +8,7 @@ resource "aws_vpc" "fp-vpc" {
   enable_dns_support    = true
 
   tags = {
-    Name = "flask-postgres-vpc"
+    Name = "flask-vpc"
   }
 }
 
@@ -31,7 +17,7 @@ resource "aws_internet_gateway" "fp-igw" {
   vpc_id = aws_vpc.fp-vpc.id
 
   tags = {
-    Name = "flask-postgres-igw"
+    Name = "flask-igw"
   }
 }
 
@@ -45,18 +31,16 @@ resource "aws_route_table" "fp-rt-public" {
   }
 
   tags = {
-    Name = "flask-postgres-rt-public"
+    Name = "flask-rt-public"
   }
 }
 
 # create a Default Route Table for the VPC
-# (good practice -- anything not associated with the above
-# RT will fall back into this one, so it's not just exposed)
-resource "aws_default_route_table" "flask-postgres-private-default" {
+resource "aws_default_route_table" "flask-private-default" {
   default_route_table_id = aws_vpc.fp-vpc.default_route_table_id
 
   tags = {
-    Name = "flask-postgres-rt-private-default"
+    Name = "flask-rt-private-default"
   }
 }
 
@@ -69,7 +53,7 @@ resource "aws_subnet" "fp-public-subnets" {
   availability_zone = data.aws_availability_zones.azs.names[count.index]
 
   tags = {
-    Name = "flask-postgres-tf-public-${count.index + 1}"
+    Name = "flask-tf-public-${count.index + 1}"
   }
 }
 
@@ -82,17 +66,7 @@ resource "aws_subnet" "fp-private-subnets" {
   vpc_id            = aws_vpc.fp-vpc.id
 
   tags = {
-    Name = "flask-postgres-tf-private-${count.index + 1}"
-  }
-}
-
-# create db subnet group
-resource "aws_db_subnet_group" "fp-db-subnet" {
-  name = "postgres-db-subnet-group"
-  subnet_ids = aws_subnet.fp-private-subnets.*.id
-
-  tags = {
-    Name = "flask-postgres-db-subnet"
+    Name = "flask-tf-private-${count.index + 1}"
   }
 }
 

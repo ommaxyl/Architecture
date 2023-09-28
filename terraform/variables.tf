@@ -1,6 +1,3 @@
-/********
-variables
-*********/
 
 variable "vpc_cidr" {
   description = "Large CIDR private block"
@@ -29,8 +26,8 @@ variable "private_cidrs" {
 }
 
 variable "flask_app_image" {
-  description = "Dockerhub image for flask-app"
-  default = ""
+  description = "ECR image for flask-app"
+  default = "" # this will be set by ENV variable
 }
 
 variable "flask_app_port" {
@@ -39,18 +36,15 @@ variable "flask_app_port" {
 }
 
 variable "flask_env" {
-  # description = "FLASK ENV variable"
   default = "production"
 }
 
 variable "flask_app" {
-  # description = "FLASK APP variable"
   default = "app"
 }
 
 variable "app_home" {
   description = "APP HOME variable"
-  # default = "flask-postgres/src/"
   default = "./src/"
 }
 
