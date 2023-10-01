@@ -78,7 +78,7 @@ if [[ $? -ne 0 ]] ; then
     exit 14
 fi
 
-terraform apply
+terraform apply -auto-approve
 if [[ $? -ne 0 ]] ; then
     echo "Failed to apply terraform configuration, ABORTING"
     exit 14
