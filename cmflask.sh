@@ -28,6 +28,29 @@ fi
 
 cd ..
 
+# IAM section
+policy=$(cat << EOF
+{
+    "Version": "2008-10-17",
+    "Statement": [
+        {
+            "Sid": "",
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "ecs-tasks.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+        }
+    ]
+}
+EOF
+)
+
+aws iam create-role --role-name "ecsTaskExecutionRole" --assume-role-policy-document "$policy"
+
+aws iam attach-role-policy --role-name ecsTaskExecutionRole \
+    --policy-arn "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+
 # --- ECR Section ---
 
 # create the repository ignoring error if already exists
