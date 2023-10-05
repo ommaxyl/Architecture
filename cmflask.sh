@@ -72,7 +72,7 @@ password=$(aws ecr get-login-password --region $AWSREGION)
 echo $password | docker login --username AWS --password-stdin \
     $AWSACCOUNT.dkr.ecr.$AWSREGION.amazonaws.com/$REPONAME
 
-# push image to ECS
+# push image to ECR
 docker tag $DOCKERIMAGE:latest \
     $AWSACCOUNT.dkr.ecr.$AWSREGION.amazonaws.com/$DOCKERIMAGE:latest
 
