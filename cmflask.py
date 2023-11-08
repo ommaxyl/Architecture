@@ -9,6 +9,21 @@ script_dir = subprocess.check_output(["dirname", __file__], universal_newlines=T
 # Move into the base directory
 os.chdir(script_dir)
 
+# Install jq into your path
+def install_jq():
+    try:
+        # You can change this to appropriate package manager for your installation
+        # For Ubuntu 
+        # subprocess.check_call(["sudo", "apt-get", "install", "jq"])
+        # For CentOS/Rhel
+        subprocess.check_call(["sudo","yum","install","jq"])
+        print("jq has been successfully installed")
+    except subprocess.CalledProcessError:
+        print("Failed to install jq. Please install it manually using your package manager")
+
+if __name__ == "__main__":
+    install_jq()
+
 DOCKERIMAGE = "muheez-cm-flask"
 REPONAME = "muheez-cm-flask"
 AWSREGION = "us-east-1"  # US-region
