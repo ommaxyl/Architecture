@@ -14,9 +14,9 @@ def install_jq():
     try:
         # You can change this to appropriate package manager for your installation
         # For Ubuntu 
-        # subprocess.check_call(["sudo", "apt-get", "install", "jq"])
+        subprocess.check_call(["sudo", "apt-get", "install", "jq"])
         # For CentOS/Rhel
-        subprocess.check_call(["sudo","yum","install","jq"])
+        #subprocess.check_call(["sudo","yum","install","jq"])
         print("jq has been successfully installed")
     except subprocess.CalledProcessError:
         print("Failed to install jq. Please install it manually using your package manager")
